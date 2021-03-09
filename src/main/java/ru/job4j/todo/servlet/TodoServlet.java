@@ -18,14 +18,34 @@ public class TodoServlet extends HttpServlet {
         resp.setContentType("text/plain");
         resp.setCharacterEncoding("UTF-8");
         resp.setHeader("Access-Control-Allow-Origin", "*");
-        String input = req.getParameter("input");
+        String input = req.getParameter("work");
         TodoService service = new TodoService(new ItemStore());
-        if (input != null) {
-            Item item = new Item(input);
-            service.saveTask(item);
-        }
         PrintWriter writer = new PrintWriter(resp.getOutputStream());
-        writer.println(service.showAllInJSON());
-        writer.flush();
+        if ("isDone".equals(input)) {
+            String id = req.getParameter("id").trim();
+            int i = Integer.parseInt(id);
+            service.changeWorkStatus(id);
+            String status = req.getParameter("status");
+            writer.println(service.showCriteria(status));
+            writer.flush();
+        }
+        if ("show".equals(input)) {
+            String res = req.getParameter("status");
+            writer.println(service.showCriteria(res));
+            writer.flush();
+        }
+        if ("input".equals(input)) {
+            String desc = req.getParameter("input");
+            String status = req.getParameter("status");
+            Item item = new Item(desc);
+            item = service.saveTask(item);
+            writer.println(service.showCriteria(status));
+            writer.flush();
+        }
+        if ("showTask".equals(input)) {
+            String activeTask = service.showCriteria("false");
+            writer.println(activeTask);
+            writer.flush();
+        }
     }
 }

@@ -78,13 +78,20 @@ public class Item {
             return false;
         }
         Item item = (Item) o;
-        return id == item.id && done == item.done
-                && Objects.equals(description, item.description)
-                && Objects.equals(created, item.created);
+        return id == item.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, description, created, done);
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Item{"
+                + "id=" + id + ", description='"
+                + description + '\''
+                + ", created=" + created
+                + ", done=" + done + '}';
     }
 }

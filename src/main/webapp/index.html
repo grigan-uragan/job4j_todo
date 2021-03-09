@@ -10,19 +10,24 @@
           crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="script.js"></script>
     <title>Document</title>
 </head>
 <body>
 <div class="container">
     <h1>To do list</h1>
     <div class="p-3 border bg-light">
-        <form method="post" action="" id="form" name="form">
+        <form>
             <div class="mb-3">
                 <label for="input" class="form-label">Create new task</label>
                 <input type="text" class="form-control" id="input" aria-describedby="emailHelp" name="input">
                 <div id="emailHelp" class="form-text">Insert description for your new task</div>
+                <div>
+                    <label for="view">Show  Tasks</label>
+                    <input type="checkbox" name="viewAll" id="view" onchange="showAll()">
+                </div>
             </div>
-            <button type="submit" class="btn btn-primary" id="btn">Submit</button>
+            <button type="submit" class="btn btn-primary" id="btn" onclick="sendForm()" >Submit</button>
         </form>
     </div>
     <div class="p-3 border bg-light">
@@ -40,39 +45,5 @@
         </table>
     </div>
 </div>
-<script>
-    function sendForm() {
-        $.ajax({
-            type: 'POST',
-            crossDomain: true,
-            url: 'http://localhost:8080/todo/task',
-            dataType: 'text',
-            data: ({ input:$('#input').val()}),
-            success: showTask
-        })
-    }
-
-    $(document).ready(
-        function () {
-            $('#btn').click(function (){
-                sendForm()
-                return false
-            })
-        }
-    )
-
-
-    function showTask(data) {
-        const tasks = JSON.parse(data)
-        for (let task of tasks) {
-            $('#table tr:last').after(
-                '<tr><th scope="row">' + task.id + '</th>'
-                + '<td>' + task.description + '</td>'
-                + '<td>' + task.created + '</td>'
-                + '<td>' + task.done + '</td>'
-                + '</tr>')
-        }
-    }
-</script>
 </body>
 </html>
