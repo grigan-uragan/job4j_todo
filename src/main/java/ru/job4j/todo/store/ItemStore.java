@@ -1,5 +1,7 @@
 package ru.job4j.todo.store;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -15,6 +17,7 @@ import java.util.List;
 import java.util.function.Function;
 
 public class ItemStore implements Store<Item>, AutoCloseable {
+    private static final Logger LOG = LogManager.getLogger(ItemStore.class);
     private StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
             .configure(new File("hibernate.cfg.xml"))
             .build();
@@ -24,7 +27,6 @@ public class ItemStore implements Store<Item>, AutoCloseable {
     @Override
     public Item save(Item element) {
         Serializable tx = tx(session -> session.save(element));
-        System.out.println(tx);
         return element;
     }
 
@@ -47,6 +49,7 @@ public class ItemStore implements Store<Item>, AutoCloseable {
             transaction.commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
+            LOG.error("transaction failed", e);
             throw e;
         } finally {
             session.close();
@@ -76,6 +79,7 @@ public class ItemStore implements Store<Item>, AutoCloseable {
             return result;
         } catch (Exception e) {
             session.getTransaction().rollback();
+            LOG.error("transaction failed", e);
             throw e;
         } finally {
             session.close();
