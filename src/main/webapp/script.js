@@ -5,6 +5,35 @@ function validate() {
     }
     return true;
 }
+
+function registrationValidate() {
+    if ($('#inputName').val() === '') {
+        alert('Field name is empty, please enter your name')
+        return false
+    }
+    if ($('#email').val() === '') {
+        alert('Field email is empty, please enter your email address')
+        return false
+    }
+    if ($('#password').val() === '') {
+        alert('Field password is empty, please enter your password')
+        return false
+    }
+    return true;
+}
+
+function authValidate() {
+    if ($('#email').val() === '') {
+        alert('Field email is empty, please enter your email address')
+        return false
+    }
+    if ($('#password').val() === '') {
+        alert('Field password is empty, please enter your password')
+        return false
+    }
+    return true;
+}
+
 function showAll() {
     const show = document.getElementById('view').checked
     $.ajax({
@@ -19,6 +48,20 @@ function showAll() {
     })
 }
 
+function sendAuthData() {
+    if (authValidate()) {
+        $.ajax({
+            type: 'POST',
+            crossDomain: true,
+            url: 'http://localhost:8080/todo/auth',
+            dataType: 'text',
+            data: ({email: $('#email'), password: $('#password')})
+        }).fail(function (err) {
+            alert(err)
+        })
+    }
+}
+
 function sendForm() {
     const show = document.getElementById('view').checked
     if (validate()) {
@@ -31,6 +74,21 @@ function sendForm() {
         }).done(function (data) {
             $('#table td').parent().remove()
             showTask(data)
+        }).fail(function (err) {
+            alert(err)
+        })
+    }
+}
+
+function sendRegData() {
+    if (registrationValidate()) {
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:8080/todo/reg',
+            dataType: 'text',
+            data: ({name: $('#inputName').val(), email: $('#email').val(), password: $('#password')})
+        }).fail(function (err) {
+            alert(err)
         })
     }
 }
@@ -45,6 +103,8 @@ $(document).ready(
             data: ({work: 'showTask'})
         }).done(function (data) {
             showTask(data)
+        }).fail(function (err) {
+            alert(err)
         })
     }
 )
@@ -53,7 +113,6 @@ $(document).ready(
 function showTask(data) {
     const tasks = JSON.parse(data)
     console.log(tasks)
-    let isDone = ''
     for (let task of tasks) {
         $('#table tr:last').after(
             '<tr><th scope="row">' + task.id + '</th>'
@@ -77,6 +136,8 @@ function wasDone(id) {
     }).done(function (data) {
         $('#table td').parent().remove()
         showTask(data)
+    }).fail(function (err) {
+        alert(err)
     })
 }
 
@@ -84,6 +145,6 @@ function checkboxOrNot(done, id) {
     if (done) {
         return '<span class="glyphicon glyphicon-ok"></span>'
     } else {
-        return '<input type="checkbox"id="  '+ id +'" name="'+ id +'" onchange="wasDone(id)">'
+        return '<input type="checkbox" id="  '+ id +'" name="'+ id +'" onchange="wasDone(id)">'
     }
 }

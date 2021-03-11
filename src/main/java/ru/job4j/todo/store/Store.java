@@ -1,7 +1,5 @@
 package ru.job4j.todo.store;
 
-import ru.job4j.todo.model.Item;
-
 import java.util.List;
 
 public interface Store<T> {
@@ -14,5 +12,5 @@ public interface Store<T> {
 
    T findById(int id);
 
-   List<Item> allItemWithStatus(boolean status);
+   List<T> allItemWithStatus(boolean status);
 }

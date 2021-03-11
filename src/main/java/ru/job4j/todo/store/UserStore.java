@@ -9,45 +9,40 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
-import ru.job4j.todo.model.Item;
+import ru.job4j.todo.model.User;
 
 import java.io.File;
 import java.util.List;
 import java.util.function.Function;
 
-public class ItemStore implements Store<Item>, AutoCloseable {
-    private static final Logger LOG = LogManager.getLogger(ItemStore.class);
+public class UserStore implements Store<User>, AutoCloseable {
+    private static final Logger LOG = LogManager.getLogger(UserStore.class);
     private final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
             .configure(new File("hibernate.cfg.xml"))
             .build();
-    private final SessionFactory factory = new MetadataSources(registry)
-            .buildMetadata().buildSessionFactory();
+    private final SessionFactory factory =
+            new MetadataSources(registry).buildMetadata().buildSessionFactory();
 
     @Override
-    public Item save(Item element) {
+    public User save(User element) {
         tx(session -> session.save(element));
         return element;
     }
 
     @Override
-    public List<Item> findAll() {
-        return tx(session -> session.createQuery("from ru.job4j.todo.model.Item").list());
+    public List<User> findAll() {
+        return tx(session -> session.createQuery("from ru.job4j.todo.model.User").list());
     }
 
     @Override
-    public Item findById(int id) {
-        return tx(session1 -> session1.get(Item.class, id));
-    }
-
-    @Override
-    public void update(Item item) {
+    public void update(User element) {
         Session session = factory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
-            session.update(item);
+            session.update(element);
             transaction.commit();
         } catch (Exception e) {
-            session.getTransaction().rollback();
+            transaction.rollback();
             LOG.error("transaction failed", e);
             throw e;
         } finally {
@@ -56,12 +51,13 @@ public class ItemStore implements Store<Item>, AutoCloseable {
     }
 
     @Override
-    public List<Item> allItemWithStatus(boolean bool) {
-        return tx(session -> {
-            Query query = session.createQuery("from Item I where I.done = :bool");
-            query.setParameter("bool", bool);
-            return query.list();
-        });
+    public User findById(int id) {
+        return tx(session -> session.get(User.class, id));
+    }
+
+    @Override
+    public List<User> allItemWithStatus(boolean status) {
+        return null;
     }
 
     @Override
@@ -69,7 +65,17 @@ public class ItemStore implements Store<Item>, AutoCloseable {
         StandardServiceRegistryBuilder.destroy(registry);
     }
 
-    private <T> T tx(Function<Session, T> command) {
+    public User findByEmail(String email, String password) {
+        return tx(session -> {
+            Query query = session.createQuery(
+                    "from User U where U.email = :email and U.password = :password");
+            query.setParameter("email", email);
+            query.setParameter("password", password);
+            return (User) query.getSingleResult();
+        });
+    }
+
+    public <T> T tx(Function<Session, T> command) {
         Session session = factory.openSession();
         Transaction transaction = session.beginTransaction();
         try {
