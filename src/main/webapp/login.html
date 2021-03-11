@@ -10,7 +10,6 @@
           crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="script.js"></script>
     <title>Login</title>
 </head>
 <body>
@@ -24,19 +23,32 @@
             </ul>
         </div>
     <h2>Log in</h2>
-    <form>
+    <form method="post" action="http://localhost:8080/todo/auth">
         <div class="mb-3">
             <label for="email" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+            <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
             <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password">
+            <input type="password" class="form-control" id="password" name="password">
         </div>
-        <button type="submit" class="btn btn-primary" onclick="sendAuthData()">Submit</button>
+        <button type="submit" class="btn btn-primary" onclick="authValidate()">Submit</button>
     </form>
 </div>
 </div>
+<script>
+    function authValidate() {
+        if ($('#email').val() === '') {
+            alert('Field email is empty, please enter your email address')
+            return false
+        }
+        if ($('#password').val() === '') {
+            alert('Field password is empty, please enter your password')
+            return false
+        }
+        return true;
+    }
+</script>
 </body>
 </html>

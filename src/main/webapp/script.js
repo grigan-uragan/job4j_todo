@@ -22,18 +22,6 @@ function registrationValidate() {
     return true;
 }
 
-function authValidate() {
-    if ($('#email').val() === '') {
-        alert('Field email is empty, please enter your email address')
-        return false
-    }
-    if ($('#password').val() === '') {
-        alert('Field password is empty, please enter your password')
-        return false
-    }
-    return true;
-}
-
 function showAll() {
     const show = document.getElementById('view').checked
     $.ajax({
@@ -48,19 +36,7 @@ function showAll() {
     })
 }
 
-function sendAuthData() {
-    if (authValidate()) {
-        $.ajax({
-            type: 'POST',
-            crossDomain: true,
-            url: 'http://localhost:8080/todo/auth',
-            dataType: 'text',
-            data: ({email: $('#email'), password: $('#password')})
-        }).fail(function (err) {
-            alert(err)
-        })
-    }
-}
+
 
 function sendForm() {
     const show = document.getElementById('view').checked

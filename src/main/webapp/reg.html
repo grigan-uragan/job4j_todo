@@ -43,7 +43,10 @@
                 crossDomain: true,
                 dataType: 'text',
                 data: ({name: $('#name').val(), email: $('#email').val(), password: $('#password')})
-            }).fail(function (err) {
+            }).done(function (data) {
+                console.log(data)
+                }
+            ).fail(function (err) {
                 alert(err)
             })
         }

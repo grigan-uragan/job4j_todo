@@ -6,7 +6,7 @@ create table tasks (
 );
 
 create table users (
-    user_id       serial primary key,
+    id       serial primary key,
     user_name     text,
     user_email    text,
     user_password text

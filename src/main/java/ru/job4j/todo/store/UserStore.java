@@ -18,7 +18,7 @@ import java.util.function.Function;
 public class UserStore implements Store<User>, AutoCloseable {
     private static final Logger LOG = LogManager.getLogger(UserStore.class);
     private final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-            .configure(new File("hibernate.cfg.xml"))
+            .configure("hibernate.cfg.xml")
             .build();
     private final SessionFactory factory =
             new MetadataSources(registry).buildMetadata().buildSessionFactory();
