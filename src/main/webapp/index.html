@@ -16,19 +16,29 @@
 <body>
 <div class="container">
     <h1>To do list</h1>
-    <h2>${user}</h2>
+    <div id="currentUser"></div>
     <div class="p-3 border bg-light">
         <form>
             <div class="mb-3">
                 <label for="input" class="form-label">Create new task</label>
                 <input type="text" class="form-control" id="input" aria-describedby="emailHelp" name="input">
                 <div id="emailHelp" class="form-text">Insert description for your new task</div>
-                <div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-5">
+                    <label for="cIds" style="font-weight: 900">Список городов</label>
+                    <select class="form-select" name="cIds" id="cIds" multiple>
+
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="view">Show All Tasks</label>
                     <input type="checkbox" name="viewAll" id="view" onchange="showAll()">
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary" id="btn" onclick="sendForm()" >Submit</button>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" id="btn" onclick="sendForm()">Submit</button>
+            </div>
         </form>
     </div>
     <div class="p-3 border bg-light">
@@ -37,6 +47,8 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Description</th>
+                <th scope="col">Categories</th>
+                <th scope="col">Owner</th>
                 <th scope="col">Date</th>
                 <th scope="col">Done</th>
             </tr>
@@ -47,7 +59,6 @@
     </div>
 </div>
 <script>
-
 </script>
 </body>
 </html>

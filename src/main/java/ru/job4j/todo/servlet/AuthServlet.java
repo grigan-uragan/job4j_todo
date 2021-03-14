@@ -2,7 +2,7 @@ package ru.job4j.todo.servlet;
 
 import ru.job4j.todo.model.User;
 import ru.job4j.todo.service.RegService;
-import ru.job4j.todo.store.UserStore;
+import ru.job4j.todo.store.DBStore;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -20,7 +20,7 @@ public class AuthServlet extends HttpServlet {
         resp.setContentType("text/plain");
         resp.setCharacterEncoding("UTF-8");
         resp.setHeader("Access-Control-Allow-Origin", "*");
-        RegService service = new RegService(new UserStore());
+        RegService service = new RegService(DBStore.instOf());
         User byEmail = service.getUserByEmail(email, password);
         if (byEmail != null) {
             HttpSession session = req.getSession();

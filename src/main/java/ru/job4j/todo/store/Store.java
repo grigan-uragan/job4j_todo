@@ -1,16 +1,28 @@
 package ru.job4j.todo.store;
 
+import ru.job4j.todo.model.Category;
+import ru.job4j.todo.model.Item;
+import ru.job4j.todo.model.User;
+
 import java.util.List;
 
-public interface Store<T> {
+public interface Store {
 
-   T save(T element);
+    void saveItem(Item item);
 
-   List<T> findAll();
+    void saveUser(User user);
 
-   void update(T element);
+   List<Item> findAllItem();
 
-   T findById(int id);
+   void updateItem(Item element);
 
-   List<T> allItemWithStatus(boolean status);
+   Item findItemById(int id);
+
+   List<Item> allNotDoneItem(String query);
+
+   User findUserByEmailAndPassword(String email, String password);
+
+   List<Category> allCategory();
+
+   Category findCategoryById(int id);
 }

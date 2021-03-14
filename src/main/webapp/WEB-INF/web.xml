@@ -24,9 +24,25 @@
     <servlet-name>AuthServlet</servlet-name>
     <servlet-class>ru.job4j.todo.servlet.AuthServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>AddServlet</servlet-name>
+    <servlet-class>ru.job4j.todo.servlet.AddItemServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>CategoryServlet</servlet-name>
+    <servlet-class>ru.job4j.todo.servlet.CategoryServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>UserServlet</servlet-name>
+    <servlet-class>ru.job4j.todo.servlet.UserServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>TodoServlet</servlet-name>
     <url-pattern>/task</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>CategoryServlet</servlet-name>
+    <url-pattern>/cat</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>RegServlet</servlet-name>
@@ -35,5 +51,13 @@
   <servlet-mapping>
     <servlet-name>AuthServlet</servlet-name>
     <url-pattern>/auth</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AddServlet</servlet-name>
+    <url-pattern>/add</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UserServlet</servlet-name>
+    <url-pattern>/user</url-pattern>
   </servlet-mapping>
 </web-app>

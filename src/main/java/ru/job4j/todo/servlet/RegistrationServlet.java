@@ -1,7 +1,7 @@
 package ru.job4j.todo.servlet;
 
 import ru.job4j.todo.service.RegService;
-import ru.job4j.todo.store.UserStore;
+import ru.job4j.todo.store.DBStore;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,7 +19,7 @@ public class RegistrationServlet extends HttpServlet {
         String name = req.getParameter("name");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        RegService service = new RegService(new UserStore());
+        RegService service = new RegService(DBStore.instOf());
         service.addUser(name, email, password);
         resp.sendRedirect(req.getContextPath() + "/login.html");
     }

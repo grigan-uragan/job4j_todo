@@ -2,12 +2,11 @@ package ru.job4j.todo.service;
 
 import ru.job4j.todo.model.User;
 import ru.job4j.todo.store.Store;
-import ru.job4j.todo.store.UserStore;
 
 public class RegService {
-    private UserStore store;
+    private Store store;
 
-    public RegService(UserStore store) {
+    public RegService(Store store) {
         this.store = store;
     }
 
@@ -16,10 +15,12 @@ public class RegService {
         user.setName(name);
         user.setEmail(email);
         user.setPassword(password);
-        store.save(user);
+        store.saveUser(user);
     }
 
     public User getUserByEmail(String email, String password) {
-        return store.findByEmail(email, password);
+        String query = String.format(
+                "from User U where U.email = %s and U.password = %s", email, password);
+        return store.findUserByEmailAndPassword(email, password);
     }
 }
