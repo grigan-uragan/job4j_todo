@@ -14,7 +14,8 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String description;
-    private Timestamp created;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date created;
     private boolean done;
     @ManyToOne
     @JoinColumn
@@ -25,7 +26,7 @@ public class Item {
     public Item() {
     }
 
-    public Item(int id, String description, Timestamp created, boolean done) {
+    public Item(int id, String description, Date created, boolean done) {
         this.id = id;
         this.description = description;
         this.created = created;
@@ -35,13 +36,13 @@ public class Item {
     public Item(int id, String description, boolean done) {
         this.id = id;
         this.description = description;
-        this.created = new Timestamp(new Date().getTime());
+        this.created = new Date(System.currentTimeMillis());
         this.done = done;
     }
 
     public Item(String description) {
         this.description = description;
-        this.created = new Timestamp(new Date().getTime());
+        this.created = new Date(System.currentTimeMillis());
     }
 
     public int getId() {
@@ -60,11 +61,11 @@ public class Item {
         this.description = description;
     }
 
-    public Timestamp getCreated() {
+    public Date getCreated() {
         return created;
     }
 
-    public void setCreated(Timestamp created) {
+    public void setCreated(Date created) {
         this.created = created;
     }
 
