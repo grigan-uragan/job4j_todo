@@ -99,8 +99,6 @@ function sendRegData() {
             url: 'http://localhost:8080/todo/reg',
             dataType: 'text',
             data: ({name: $('#inputName').val(), email: $('#email').val(), password: $('#password')})
-        }).fail(function (err) {
-            alert(err)
         })
     }
 }
@@ -114,8 +112,6 @@ function loadItem() {
         data: ({work: 'showTask'})
     }).done(function (data) {
         showTask(data)
-    }).fail(function (err) {
-        alert(err)
     })
 }
 
@@ -153,8 +149,6 @@ function wasDone(id) {
     }).done(function (data) {
         $('#table td').parent().remove()
         showTask(data)
-    }).fail(function (err) {
-        alert(err)
     })
 }
 

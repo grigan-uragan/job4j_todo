@@ -13,60 +13,28 @@
     <title>Registration</title>
 </head>
 <body>
-<div class="container">
-    <div class="container pt-3">
-        <h2>Registration</h2>
-        <form method="post" action="http://localhost:8080/todo/reg">
-            <div class="mb-3">
-                <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" name="name">
-            </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Email address</label>
-                <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp">
-                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" id="password">
-            </div>
-            <button type="submit" class="btn btn-primary" >Submit</button>
-        </form>
+<div class="container gx-5">
+    <div class="row">
+        <div class="col-5">
+            <h2>Registration</h2>
+            <form method="post" action="http://localhost:8080/todo/reg">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" name="name">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp">
+                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" name="password" class="form-control" id="password">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
     </div>
 </div>
-<script>
-    function sendRegData() {
-        if (registrationValidate()) {
-            $.ajax({
-                type: 'POST',
-                url: 'http://localhost:8080/todo/reg',
-                crossDomain: true,
-                dataType: 'text',
-                data: ({name: $('#name').val(), email: $('#email').val(), password: $('#password')})
-            }).done(function (data) {
-                console.log(data)
-                }
-            ).fail(function (err) {
-                alert(err)
-            })
-        }
-    }
-
-    function registrationValidate() {
-        if ($('#name').val() === '') {
-            alert('Field name is empty, please enter your name')
-            return false
-        }
-        if ($('#email').val() === '') {
-            alert('Field email is empty, please enter your email address')
-            return false
-        }
-        if ($('#password').val() === '') {
-            alert('Field password is empty, please enter your password')
-            return false
-        }
-        return true;
-    }
-</script>
 </body>
 </html>

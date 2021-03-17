@@ -14,29 +14,28 @@
     <title>TODO List</title>
 </head>
 <body>
-<div class="container">
-    <h1>To do list</h1>
+<div class="container gx-5">
+    <h1 align="center">To do list</h1>
     <div id="currentUser"></div>
     <div class="p-3 border bg-light">
         <form>
-            <div class="mb-3">
+            <div class="form-group p-4">
                 <label for="input" class="form-label">Create new task</label>
                 <input type="text" class="form-control" id="input" aria-describedby="emailHelp" name="input">
                 <div id="emailHelp" class="form-text">Insert description for your new task</div>
             </div>
-            <div class="form-group row">
-                <div class="col-sm-5">
-                    <label for="cIds" style="font-weight: 900">Список городов</label>
-                    <select class="form-select" name="cIds" id="cIds" multiple>
 
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="view">Show All Tasks</label>
-                    <input type="checkbox" name="viewAll" id="view" onchange="showAll()">
-                </div>
+            <div class="form-group p-4">
+                <label for="cIds">Category</label>
+                <select class="form-select" name="cIds" id="cIds">
+                </select>
             </div>
-            <div class="form-group">
+            <div class="form-group p-4">
+                <label for="view">Show All Tasks</label>
+                <input type="checkbox" name="viewAll" id="view" onchange="showAll()">
+            </div>
+
+            <div class="form-group p-4">
                 <button type="submit" class="btn btn-primary" id="btn" onclick="sendForm()">Submit</button>
             </div>
         </form>
